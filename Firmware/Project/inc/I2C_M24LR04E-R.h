@@ -84,7 +84,7 @@ void M24LR04E_ShutDown(FunctionalState NewState);
 void M24LR04E_ReadOneByte (uint8_t EE_address, uint16_t ReadAddr,uint8_t* pBuffer);
 void M24LR04E_ReadBuffer (uint8_t EE_address, uint16_t ReadAddr, uint8_t NumByteToRead,uint8_t* pBuffer);
 void M24LR04E_WriteOneByte (uint8_t EE_address, uint16_t ReadAddr,uint8_t pBuffer);
-
+void M24LR04E_WriteBuffer(uint8_t EE_address, uint16_t WriteAddr, uint8_t NumByteToWrite, uint8_t* pBuffer);
 
 
 /**

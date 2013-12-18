@@ -443,6 +443,63 @@ int32_t I2C_TimeOut = I2C_TIMEOUT;
 }
 
 
+/**
+  * @brief  Write to the configuration register of the M24LR16E.
+  * @param  RegValue: sepecifies the value to be written to M24LR16E configuration
+  *         register.
+  * @retval None
+  */
+void M24LR04E_WriteBuffer(uint8_t EE_address, uint16_t WriteAddr, uint8_t NumByteToWrite, uint8_t* pBuffer)
+{ 
+	uint8_t i;
+	int32_t I2C_TimeOut = I2C_TIMEOUT;
+  /*-------------------------------- Transmission Phase -----------------------*/
+  /* Send M24LR04E_I2C START condition */
+  I2C_GenerateSTART(M24LR04E_I2C, ENABLE);
+
+  /* Test on M24LR04E_I2C EV5 and clear it */
+  while (!I2C_CheckEvent(M24LR04E_I2C, I2C_EVENT_MASTER_MODE_SELECT)&& I2C_TimeOut-->0)  /* EV5 */
+  {
+  }
+
+  /* Send STLM75 slave address for write */
+  I2C_Send7bitAddress(M24LR04E_I2C, EE_address, I2C_Direction_Transmitter);
+
+  /* Test on M24LR04E_I2C EV6 and clear it */
+  while (!I2C_CheckEvent(M24LR04E_I2C, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED)&& I2C_TimeOut-->0) /* EV6 */
+  {
+  }
+	
+	// Send Address of first byte to be read & wait event detection 
+	I2C_SendData(M24LR04E_I2C,(uint8_t)(WriteAddr >> 8)); // MSB 
+
+  // Test on M24LR04E_I2C EV8 and clear it 
+  while (!I2C_CheckEvent(M24LR04E_I2C, I2C_EVENT_MASTER_BYTE_TRANSMITTED)&& I2C_TimeOut-->0) // EV8 
+  {
+  }
+
+	// Send Address of first byte to be read & wait event detection 
+	I2C_SendData(M24LR04E_I2C,(uint8_t)WriteAddr); // LSB 
+  // Test on M24LR04E_I2C EV8 and clear it 
+  while (!I2C_CheckEvent(M24LR04E_I2C, I2C_EVENT_MASTER_BYTE_TRANSMITTED)&& I2C_TimeOut-->0) // EV8 
+  {
+  }
+	
+  /* Send the configuration register data pointer */
+	for(i = 0; i < NumByteToWrite; i++)
+	{
+		I2C_SendData(M24LR04E_I2C, pBuffer[i]);
+
+		/* Test on M24LR04E_I2C EV8 and clear it */
+		while (!I2C_CheckEvent(M24LR04E_I2C, I2C_EVENT_MASTER_BYTE_TRANSMITTED)&& I2C_TimeOut-->0) /* EV8 */
+		{
+		}
+	}
+
+  /* Send M24LR04E_I2C STOP Condition */
+  I2C_GenerateSTOP(M24LR04E_I2C, ENABLE);
+}
+
 
 /**
   * @brief this function reads a block of data from the M24LR16E EEPROM . 

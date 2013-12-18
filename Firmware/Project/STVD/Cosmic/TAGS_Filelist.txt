@@ -1,3 +1,5 @@
+..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_itc.h
+..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_tim2.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_adc.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_clk.h
@@ -7,6 +9,8 @@
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_i2c.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_lcd.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_pwr.h
+..\..\..\libraries\stm8l15x_stdperiph_driver\src\stm8l15x_itc.c
+..\..\..\libraries\stm8l15x_stdperiph_driver\src\stm8l15x_tim2.c
 ..\..\..\libraries\stm8l15x_stdperiph_driver\src\stm8l15x_adc.c
 ..\..\..\libraries\stm8l15x_stdperiph_driver\src\stm8l15x_clk.c
 ..\..\..\libraries\stm8l15x_stdperiph_driver\src\stm8l15x_exti.c
@@ -35,6 +39,6 @@
 ..\..\src\stm8_interrupt_vector.c
 ..\..\src\stm8l15x_it.c
 ..\..\src\stm8l_discovery_lcd.c
-..\..\..\..\..\..\..\..\..\..\program files (x86)\cosmic\cxstm8_32k\hstm8\mods0.h
+..\..\..\..\..\..\..\..\..\program files (x86)\cosmic\cxstm8_32k\hstm8\mods0.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_rtc.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_tim4.h
