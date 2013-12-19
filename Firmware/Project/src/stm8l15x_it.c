@@ -32,6 +32,9 @@ extern EEPROM uint8_t EEMenuState;
 //extern bool Auto_test;
 extern uint8_t t_bar[2];
 
+extern void readControlData(void);
+extern void writeControlData(void);
+
 /** @addtogroup IT_Functions
   * @{
   */
@@ -132,7 +135,6 @@ INTERRUPT_HANDLER(EXTIE_F_PVD_IRQHandler,5)
    it is recommended to set a breakpoint on the following instruction.
 */
   while (1);
-
 }
 
 /**
@@ -180,8 +182,10 @@ INTERRUPT_HANDLER(EXTI0_IRQHandler,8)
 /* In order to detect unexpected events during development,
    it is recommended to set a breakpoint on the following instruction.
 */
-  while (1);
-
+	readControlData();
+	writeControlData();
+	
+	EXTI_ClearITPendingBit(EXTI_IT_Pin0);
 }
 
 /**

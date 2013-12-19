@@ -1,4 +1,5 @@
 #include "stm8l15x.h"
+#include "stm8l15x_it.h"
 #include "discover_board.h"
 #include "I2C_M24LR04E-R.h"
 #include "misc.h"
@@ -6,7 +7,7 @@
 
 uint8_t state_machine;
 uint8_t NDEFmessage[0x40];
-EEPROM uint8_t         EEMenuState;
+EEPROM uint8_t EEMenuState;
 
 volatile char FLASH_CR2     @0x5051;    
 volatile char FLASH_NCR2    @0x17ff;    
@@ -29,6 +30,7 @@ volatile char FLASH_IAPSR   @0x5054;
 #define NDEF_VL2 0x000C
 #define NDEF_PAD 0x000D
 #define NDEF_DAS 0x0010
+
 #define HEADER_EXTRA_LEN 0x4
 #define PAYLOAD_EXTRA_LEN 0x7 
 #define LAN_CODE "en"
@@ -36,20 +38,20 @@ volatile char FLASH_IAPSR   @0x5054;
 #define NUM_DIGITAL_VALUES 4
 #define NUM_ANALOG_VALUES 4
 
-static void deInitClock(void);
-static void deInitGPIO(void);
-static char initCharArray(char *array, char length);
-static char initAnalogControls(void);
-static char initDigitalControls(void);
-static char initNDEFMessage(void);
-static char readControlData(void);
-static void writeControlData(void);
-static void writeEEPROMByte(const char address, char data);
+void deInitClock(void);
+void deInitGPIO(void);
+char initCharArray(char *array, char length);
+char initAnalogControls(void);
+char initDigitalControls(void);
+char initNDEFMessage(void);
+char readControlData(void);
+void writeControlData(void);
+void writeEEPROMByte(const char address, char data);
 
 char digital[NUM_DIGITAL_VALUES];
 char analog[NUM_ANALOG_VALUES];
 
-static void deInitClock(void)
+void deInitClock(void)
 {
 	CLK_PeripheralClockConfig(CLK_Peripheral_TIM2, DISABLE);
 	CLK_PeripheralClockConfig(CLK_Peripheral_TIM3, DISABLE);
@@ -76,7 +78,7 @@ static void deInitClock(void)
 	CLK_PeripheralClockConfig(CLK_Peripheral_CSSLSE, DISABLE);
 }
 
-static void deInitGPIO (void)
+void deInitGPIO (void)
 {
 	GPIO_Init( GPIOA, GPIO_Pin_All, GPIO_Mode_Out_OD_Low_Fast);
 	GPIO_Init( GPIOB, GPIO_Pin_All, GPIO_Mode_Out_OD_Low_Fast);
@@ -93,7 +95,7 @@ GPIO_Pin_5 | GPIO_Pin_6 |GPIO_Pin_7, GPIO_Mode_Out_OD_Low_Fast);
 	GPIOE->ODR = 0xFF;
 }
 
-static char initCharArray(char *array, char length)
+char initCharArray(char *array, char length)
 {
 	char i;
 	
@@ -103,19 +105,19 @@ static char initCharArray(char *array, char length)
 	}
 }
 
-static char initAnalogControls(void)
+char initAnalogControls(void)
 {
 	initCharArray(analog, NUM_ANALOG_VALUES);
 } 
 
-static char initDigitalControls(void)
+char initDigitalControls(void)
 {
   initCharArray(digital, NUM_DIGITAL_VALUES);
         
   GPIO_Init(GPIOC, GPIO_Pin_7, GPIO_Mode_In_FL_No_IT);
 } 
 
-static char initNDEFMessage(void)
+char initNDEFMessage(void)
 {
 	char i;
 	char length = NUM_DIGITAL_VALUES + NUM_ANALOG_VALUES;
@@ -144,13 +146,15 @@ static char initNDEFMessage(void)
 	}
 }
 
-static char readControlData(void)
+char readControlData(void)
 {
 	digital[0] = GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_7);
 }                                  
 
-static void writeControlData(void)
+void writeControlData(void)
 {
+	GPIO_WriteBit(LED_GPIO_PORT, LED_GPIO_PIN, 0x1);
+	
 	M24LR04E_Init();
 	M24LR04E_WriteBuffer(M24LR16_EEPROM_ADDRESS_USER, NDEF_DAS, NUM_DIGITAL_VALUES, digital);
 	M24LR04E_DeInit();
@@ -158,9 +162,11 @@ static void writeControlData(void)
 	M24LR04E_Init();
 	M24LR04E_WriteBuffer(M24LR16_EEPROM_ADDRESS_USER, NDEF_DAS + NUM_DIGITAL_VALUES, NUM_ANALOG_VALUES, analog);
 	M24LR04E_DeInit();
+	
+	GPIO_WriteBit(LED_GPIO_PORT, LED_GPIO_PIN, 0x0);
 }                         
                  
-static void writeEEPROMByte(const char address, char data)
+void writeEEPROMByte(const char address, char data)
 {
 	M24LR04E_Init();
 	M24LR04E_WriteOneByte(M24LR16_EEPROM_ADDRESS_USER, address, data);
@@ -193,11 +199,13 @@ void main(void)
 	initAnalogControls();
 	initNDEFMessage();
 	
-	while (1)
+	GPIO_Init(GPIOF, GPIO_Pin_0, GPIO_Mode_In_FL_IT);
+	EXTI_SetPinSensitivity(EXTI_Pin_0, EXTI_Trigger_Rising);
+	
+	enableInterrupts();
+	
+	while (1) 
 	{
-		readControlData();
-		writeControlData();
-		
-		delay_ms(10);
+		wfi();
 	}             
 }
