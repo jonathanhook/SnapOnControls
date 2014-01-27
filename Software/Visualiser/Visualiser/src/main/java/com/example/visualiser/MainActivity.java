@@ -1,11 +1,11 @@
 package com.example.visualiser;
-
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcV;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
@@ -19,12 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.nfc.NfcAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Console;
+import java.io.IOException;
 
 public class MainActivity extends ActionBarActivity
 {
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,13 +39,22 @@ public class MainActivity extends ActionBarActivity
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
     }
 
+
     @Override
-    public void onNewIntent(Intent intent)
+    public void onResume()
     {
-        int i = 0;
+        super.onResume();
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+
+        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action))
+        {
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            readTag(tag);
+        }
     }
 
     @Override
@@ -57,13 +68,12 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.action_settings:
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -77,12 +87,57 @@ public class MainActivity extends ActionBarActivity
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState)
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void readTag(Tag tag)
+    {
+        NfcV v = NfcV.get(tag);
+
+        try
+        {
+            v.connect();
+
+            for(int i = 0; i < 1000; i++)
+            {
+                byte[] singleBlock = new byte[]{0x02, 0x20, 0x3};
+                byte[] multipleBlocks = new byte[] {0x02, 0x23, 0x0, 0x5};
+
+                byte[] response = v.transceive(multipleBlocks);
+                print(response);
+            }
+
+            v.close();
+        }
+        catch(IOException e)
+        {
+            TextView textView = (TextView) findViewById(R.id.textView);
+            textView.setText(e.getMessage());
+        }
+
+    }
+
+    private void print(byte[] array)
+    {
+        String val = "";
+        for(int i = 0; i < array.length; i++)
+        {
+            val += "Value: ";
+            val += Integer.toHexString(array[i]);
+            val += "\r\n";
+        }
+
+        TextView textView = (TextView) findViewById(R.id.textView);
+        textView.setText(val);
+    }
 }
+
+
+
+//TextView textView = (TextView) findViewById(R.id.textView);
+//textView.setText("here");
