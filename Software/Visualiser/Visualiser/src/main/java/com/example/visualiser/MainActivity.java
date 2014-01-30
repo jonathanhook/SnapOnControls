@@ -24,9 +24,14 @@ import android.widget.Toast;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends ActionBarActivity
 {
+    private Timer timer;
+    private WirelessControlsInterface wirelessInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -39,8 +44,36 @@ public class MainActivity extends ActionBarActivity
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        wirelessInterface = new WirelessControlsInterface();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                wirelessInterface.pollReader();
+
+                boolean hasTag = wirelessInterface.getHasTag();
+                if(hasTag)
+                {
+                    TextView textView = (TextView) findViewById(R.id.textView);
+                    textView.setText("Tag connected");
+                }
+                else
+                {
+                    TextView textView = (TextView) findViewById(R.id.textView);
+                    textView.setText("");
+                }
+            }
+        }, 0, 1000);
+
     }
 
+    private void update()
+    {
+
+    }
 
     @Override
     public void onResume()
@@ -53,7 +86,15 @@ public class MainActivity extends ActionBarActivity
         if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action))
         {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            readTag(tag);
+
+            try
+            {
+                wirelessInterface.tagDetected(tag);
+            }
+            catch(IOException e)
+            {
+
+            }
         }
     }
 
@@ -97,6 +138,7 @@ public class MainActivity extends ActionBarActivity
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void readTag(Tag tag)
     {
+        /*
         NfcV v = NfcV.get(tag);
 
         try
@@ -119,21 +161,7 @@ public class MainActivity extends ActionBarActivity
             TextView textView = (TextView) findViewById(R.id.textView);
             textView.setText(e.getMessage());
         }
-
-    }
-
-    private void print(byte[] array)
-    {
-        String val = "";
-        for(int i = 0; i < array.length; i++)
-        {
-            val += "Value: ";
-            val += Integer.toHexString(array[i]);
-            val += "\r\n";
-        }
-
-        TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(val);
+    */
     }
 }
 
