@@ -1,9 +1,11 @@
 package com.example.visualiser;
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NdefMessage;
+import android.nfc.NfcManager;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcV;
@@ -45,34 +47,7 @@ public class MainActivity extends ActionBarActivity
                     .commit();
         }
 
-        wirelessInterface = new WirelessControlsInterface();
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                wirelessInterface.pollReader();
-
-                boolean hasTag = wirelessInterface.getHasTag();
-                if(hasTag)
-                {
-                    TextView textView = (TextView) findViewById(R.id.textView);
-                    textView.setText("Tag connected");
-                }
-                else
-                {
-                    TextView textView = (TextView) findViewById(R.id.textView);
-                    textView.setText("");
-                }
-            }
-        }, 0, 1000);
-
-    }
-
-    private void update()
-    {
-
+        wirelessInterface = new WirelessControlsInterface(this, 100);
     }
 
     @Override
@@ -82,20 +57,6 @@ public class MainActivity extends ActionBarActivity
 
         Intent intent = getIntent();
         String action = intent.getAction();
-
-        if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action))
-        {
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-            try
-            {
-                wirelessInterface.tagDetected(tag);
-            }
-            catch(IOException e)
-            {
-
-            }
-        }
     }
 
     @Override
@@ -139,28 +100,7 @@ public class MainActivity extends ActionBarActivity
     private void readTag(Tag tag)
     {
         /*
-        NfcV v = NfcV.get(tag);
 
-        try
-        {
-            v.connect();
-
-            for(int i = 0; i < 1000; i++)
-            {
-                byte[] singleBlock = new byte[]{0x02, 0x20, 0x3};
-                byte[] multipleBlocks = new byte[] {0x02, 0x23, 0x0, 0x5};
-
-                byte[] response = v.transceive(multipleBlocks);
-                print(response);
-            }
-
-            v.close();
-        }
-        catch(IOException e)
-        {
-            TextView textView = (TextView) findViewById(R.id.textView);
-            textView.setText(e.getMessage());
-        }
     */
     }
 }

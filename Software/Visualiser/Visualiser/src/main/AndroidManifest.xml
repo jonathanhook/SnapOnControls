@@ -22,11 +22,11 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
+                <!--<action android:name="android.nfc.action.TECH_DISCOVERED"/>-->
             </intent-filter>
 
-            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
-                       android:resource="@xml/nfc_tech_list" />
+           <!-- <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+                       android:resource="@xml/nfc_tech_list" />-->
         </activity>
     </application>
 </manifest>
