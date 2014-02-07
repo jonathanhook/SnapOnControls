@@ -60,13 +60,11 @@ Release\stm8l15x_lcd.o
 Release\stm8l15x_pwr.o
 Release\vcc_measure.o
 Release\delay.o
-Release\discover_functions.o
 Release\i2c_m24lr04e-r.o
 Release\i2c_stts751.o
 Release\main.o
 Release\misc.o
 Release\stm8l15x_it.o
-Release\stm8l_discovery_lcd.o
 #<END OBJECT_FILES>
 
 

@@ -527,11 +527,6 @@ Next=Root.User.User\src...\..\src\delay.c
 [Root.User.User\src...\..\src\delay.c]
 ElemType=File
 PathName=..\..\src\delay.c
-Next=Root.User.User\src...\..\src\discover_functions.c
-
-[Root.User.User\src...\..\src\discover_functions.c]
-ElemType=File
-PathName=..\..\src\discover_functions.c
 Next=Root.User.User\src...\..\src\i2c_m24lr04e-r.c
 
 [Root.User.User\src...\..\src\i2c_m24lr04e-r.c]
@@ -562,8 +557,3 @@ Next=Root.User.User\src...\..\src\stm8l15x_it.c
 [Root.User.User\src...\..\src\stm8l15x_it.c]
 ElemType=File
 PathName=..\..\src\stm8l15x_it.c
-Next=Root.User.User\src...\..\src\stm8l_discovery_lcd.c
-
-[Root.User.User\src...\..\src\stm8l_discovery_lcd.c]
-ElemType=File
-PathName=..\..\src\stm8l_discovery_lcd.c

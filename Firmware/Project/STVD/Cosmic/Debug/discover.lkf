@@ -63,13 +63,11 @@ Debug\stm8l15x_lcd.o
 Debug\stm8l15x_pwr.o
 Debug\vcc_measure.o
 Debug\delay.o
-Debug\discover_functions.o
 Debug\i2c_m24lr04e-r.o
 Debug\i2c_stts751.o
 Debug\main.o
 Debug\misc.o
 Debug\stm8l15x_it.o
-Debug\stm8l_discovery_lcd.o
 #<END OBJECT_FILES>
 
 

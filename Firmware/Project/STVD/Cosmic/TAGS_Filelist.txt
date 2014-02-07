@@ -27,14 +27,12 @@
 ..\..\inc\stm8l_discovery_lcd.h
 ..\..\src\vcc_measure.c
 ..\..\src\delay.c
-..\..\src\discover_functions.c
 ..\..\src\i2c_m24lr04e-r.c
 ..\..\src\i2c_stts751.c
 ..\..\src\main.c
 ..\..\src\misc.c
 ..\..\src\stm8_interrupt_vector.c
 ..\..\src\stm8l15x_it.c
-..\..\src\stm8l_discovery_lcd.c
 ..\..\..\..\..\..\..\..\..\program files (x86)\cosmic\cxstm8_32k\hstm8\mods0.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_rtc.h
 ..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x_tim4.h

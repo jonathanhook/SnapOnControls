@@ -301,12 +301,12 @@ INTERRUPT_HANDLER(EXTI6_IRQHandler,14)
   */
 INTERRUPT_HANDLER(EXTI7_IRQHandler,15)
 {
-  
-  /* User button pressed */
+  /*
+  // User button pressed 
   if ((GPIOC->IDR & USER_GPIO_PIN) == 0x0) 
   {
      
-  /* To pass to next state*/
+    // To pass to next state
 		switch (state_machine)
 		{
 			case STATE_VREF: 
@@ -325,9 +325,9 @@ INTERRUPT_HANDLER(EXTI7_IRQHandler,15)
 		}    
 	}
   EEMenuState = state_machine;
-  EXTI_ClearITPendingBit(EXTI_IT_Pin7);
-  
-
+	*/
+	
+  //EXTI_ClearITPendingBit(EXTI_IT_Pin7);
 }
 /**
   * @brief LCD start of new frame Interrupt routine.
