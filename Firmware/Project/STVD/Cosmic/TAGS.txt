@@ -1425,7 +1425,7 @@ INTERRUPT_HANDLER	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	27
 INTERRUPT_HANDLER_TRAP	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2776;"	macro
 INTERRUPT_HANDLER_TRAP	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2781;"	macro
 INTERRUPT_HANDLER_TRAP	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2790;"	macro
-INTERRUPT_HANDLER_TRAP	..\..\src\stm8l15x_it.c	56;"	function
+INTERRUPT_HANDLER_TRAP	..\..\src\stm8l15x_it.c	55;"	function
 IN_RAM	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	105;"	macro
 IN_RAM	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	112;"	macro
 IN_RAM	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	126;"	macro
@@ -3093,7 +3093,6 @@ wfi	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2756;"	macro
 wfi	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2767;"	macro
 writeControlData	..\..\src\main.c	153;"	function	signature:(void)
 writeControlData	..\..\src\main.c	44;"	prototype	file:	signature:(void)
-writeControlData	..\..\src\stm8l15x_it.c	36;"	prototype	file:	signature:(void)
 writeEEPROMByte	..\..\src\main.c	165;"	function	signature:(const char address, char data)
 writeEEPROMByte	..\..\src\main.c	45;"	prototype	file:	signature:(const char address, char data)
 x17ff	..\..\src\main.c	11;"	variable
