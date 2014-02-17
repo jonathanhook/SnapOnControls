@@ -179,7 +179,6 @@ INTERRUPT_HANDLER(EXTID_IRQHandler,7)
 INTERRUPT_HANDLER(EXTI0_IRQHandler,8)
 {
 	readControlData();
-
 	EXTI_ClearITPendingBit(EXTI_IT_Pin0);
 }
 
