@@ -12,43 +12,61 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class WirelessControlsInterface implements NfcAdapter.ReaderCallback
 {
+    public interface WirelessControlsEventListener
+    {
+        public void onDataReceived(WirelessControlsInterface sender);
+        public void onTagAdded(WirelessControlsInterface sender);
+        public void onTagRemoved(WirelessControlsInterface sender);
+    }
+
     private static final int NUM_DIGITAL_CONTROLS = 4;
     private static final int NUM_ANALOG_CONTROLS = 4;
 
     private boolean hasTag;
-    private NfcV vTag;
+    private Tag tag;
     private Timer timer;
     private int readerPollRate;
-    private byte[] digitalControls;
+    private boolean[] digitalControls;
     private byte[] analogControls;
+    private List<WirelessControlsEventListener> listeners;
+    private boolean autoPoll;
+    private NfcV vTag;
 
-    public WirelessControlsInterface(Activity activity, int readerPollRate)
+    public WirelessControlsInterface(Activity activity, boolean autoPoll, int readerPollRate)
     {
+        this.autoPoll = autoPoll;
         this.readerPollRate = readerPollRate;
 
         hasTag = false;
-        vTag = null;
-        digitalControls = new byte[NUM_DIGITAL_CONTROLS];
+        tag = null;
+        digitalControls = new boolean[NUM_DIGITAL_CONTROLS];
         analogControls = new byte[NUM_ANALOG_CONTROLS];
+        listeners = new ArrayList<WirelessControlsEventListener>();
+
+        Bundle options = new Bundle();
+        //options.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 1000);
 
         NfcAdapter adapter = NfcAdapter.getDefaultAdapter(activity);
-        adapter.enableReaderMode(activity, this, NfcAdapter.FLAG_READER_NFC_V | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+        adapter.enableReaderMode(activity, this, NfcAdapter.FLAG_READER_NFC_V | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, options);
     }
 
     @Override
     public void onTagDiscovered(Tag tag)
     {
-        try
-        {
-            vTag = NfcV.get(tag);
-            vTag.connect();
+        this.tag = tag;
+        vTag = NfcV.get(tag);
+        hasTag = true;
 
+        if(autoPoll)
+        {
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask()
             {
@@ -58,59 +76,70 @@ public class WirelessControlsInterface implements NfcAdapter.ReaderCallback
                     pollReader();
                 }
             }, 0, readerPollRate);
-
-            hasTag = true;
         }
-        catch(IOException e)
+
+        for (WirelessControlsEventListener w : listeners)
         {
-            hasTag = false;
+            w.onTagAdded(this);
         }
     }
 
-    private void pollReader()
+    public void addWirelessControlsEventListener(WirelessControlsEventListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    public void pollReader()
     {
         if(hasTag)
         {
-            if(vTag.isConnected())
+            try
             {
-                try
+                if(!vTag.isConnected())
                 {
-                    byte[] multipleBlocks = new byte[] {0x02, 0x23, 0x3, 0x2};
+                    vTag.connect();
+
+                    byte[] multipleBlocks = new byte[] {0x02, 0x23, 0x4, 0x1};
                     byte[] response = vTag.transceive(multipleBlocks);
 
-                    digitalControls[0] = response[0];
-                    digitalControls[1] = response[1];
-                    digitalControls[2] = response[2];
-                    digitalControls[3] = response[3];
+                    vTag.close();
+
+    /*
+                    digitalControls[0] = response[0] != 0;
+                    digitalControls[1] = response[1] != 0;
+                    digitalControls[2] = response[2] != 0;
+                    digitalControls[3] = response[3] != 0;
 
                     analogControls[0] = response[4];
                     analogControls[1] = response[5];
                     analogControls[2] = response[6];
-                    analogControls[3] = response[7];
-                }
-                catch(IOException e)
-                {
-                    hasTag = false;
+                    analogControls[3] = response[7];*/
+
+                    for (WirelessControlsEventListener w : listeners)
+                    {
+                        w.onDataReceived(this);
+                    }
                 }
             }
-            else
+            catch(IOException e)
             {
+
                 timer.cancel();
                 hasTag = false;
+                tag = null;
+
+                for (WirelessControlsEventListener w : listeners)
+                {
+                    w.onTagRemoved(this);
+                }
+
             }
         }
     }
 
-    public boolean getHasTag()
-    {
-        return hasTag;
-    }
-    public byte[] getDigitalControls()
-    {
-        return digitalControls;
-    }
-    public byte[] getAnalogControls()
-    {
-        return analogControls;
-    }
+    public boolean getHasTag() { return hasTag; }
+    public boolean[] getDigitalControls() { return digitalControls; }
+    public byte[] getAnalogControls() { return analogControls; }
+    public Tag getTag() { return tag; }
+    public NfcV getNfcVTag() { return vTag; }
 }

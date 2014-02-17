@@ -29,9 +29,9 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends ActionBarActivity
+@TargetApi(Build.VERSION_CODES.KITKAT)
+public class MainActivity extends ActionBarActivity implements WirelessControlsInterface.WirelessControlsEventListener
 {
-    private Timer timer;
     private WirelessControlsInterface wirelessInterface;
 
     @Override
@@ -47,7 +47,8 @@ public class MainActivity extends ActionBarActivity
                     .commit();
         }
 
-        wirelessInterface = new WirelessControlsInterface(this, 100);
+        wirelessInterface = new WirelessControlsInterface(this, true, 32);
+        wirelessInterface.addWirelessControlsEventListener(this);
     }
 
     @Override
@@ -96,16 +97,46 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void readTag(Tag tag)
+    public void onDataReceived(WirelessControlsInterface sender)
     {
-        /*
+        boolean[] digital = sender.getDigitalControls();
 
-    */
+        updateTextById(R.id.d0, digital[0] ? "True" : "False");
+        updateTextById(R.id.d1, digital[1] ? "True" : "False");
+        updateTextById(R.id.d2, digital[2] ? "True" : "False");
+        updateTextById(R.id.d3, digital[3] ? "True" : "False");
+    }
+
+    public void onTagAdded(WirelessControlsInterface sender)
+    {
+        NfcV tag = sender.getNfcVTag();
+        byte[] id = tag.getTag().getId();
+
+        updateTextById(R.id.tagConnectedTextView, "True");
+        updateTextById(R.id.tagId, id.toString());
+    }
+
+    public void onTagRemoved(WirelessControlsInterface sender)
+    {
+        updateTextById(R.id.tagConnectedTextView, "False");
+        updateTextById(R.id.tagId, "NULL");
+
+        updateTextById(R.id.d0, "False");
+        updateTextById(R.id.d1, "False");
+        updateTextById(R.id.d2, "False");
+        updateTextById(R.id.d3, "False");
+    }
+
+    private void updateTextById(final int id, final String text)
+    {
+        this.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                TextView t = (TextView)findViewById(id);
+                t.setText(text);
+            }
+        });
     }
 }
-
-
-
-//TextView textView = (TextView) findViewById(R.id.textView);
-//textView.setText("here");
