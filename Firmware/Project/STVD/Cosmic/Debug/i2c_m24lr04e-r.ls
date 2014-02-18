@@ -26,9 +26,9 @@
  107  0013 4b00          	push	#0
  108  0015 5f            	clrw	x
  109  0016 89            	pushw	x
- 110  0017 ae4e20        	ldw	x,#20000
+ 110  0017 ae86a0        	ldw	x,#34464
  111  001a 89            	pushw	x
- 112  001b ae0000        	ldw	x,#0
+ 112  001b ae0001        	ldw	x,#1
  113  001e 89            	pushw	x
  114  001f ae5210        	ldw	x,#21008
  115  0022 cd0000        	call	_I2C_Init

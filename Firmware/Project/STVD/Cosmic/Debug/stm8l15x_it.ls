@@ -81,10 +81,10 @@
  344  0023 89            	pushw	x
  347                     ; 181 	readControlData();
  349  0024 cd0000        	call	_readControlData
- 351                     ; 183 	EXTI_ClearITPendingBit(EXTI_IT_Pin0);
+ 351                     ; 182 	EXTI_ClearITPendingBit(EXTI_IT_Pin0);
  353  0027 ae0001        	ldw	x,#1
  354  002a cd0000        	call	_EXTI_ClearITPendingBit
- 356                     ; 184 }
+ 356                     ; 183 }
  359  002d 85            	popw	x
  360  002e bf00          	ldw	c_y,x
  361  0030 320002        	pop	c_y+2
@@ -92,150 +92,150 @@
  363  0034 bf00          	ldw	c_x,x
  364  0036 320002        	pop	c_x+2
  365  0039 80            	iret
- 387                     ; 193 INTERRUPT_HANDLER(EXTI1_IRQHandler,9)
- 387                     ; 194 {
+ 387                     ; 192 INTERRUPT_HANDLER(EXTI1_IRQHandler,9)
+ 387                     ; 193 {
  388                     	switch	.text
  389  003a               f_EXTI1_IRQHandler:
  393  003a               L502:
- 394                     ; 198    while (1);
+ 394                     ; 197    while (1);
  396  003a 20fe          	jra	L502
- 418                     ; 211 INTERRUPT_HANDLER(EXTI2_IRQHandler,10)
- 418                     ; 212 {
+ 418                     ; 210 INTERRUPT_HANDLER(EXTI2_IRQHandler,10)
+ 418                     ; 211 {
  419                     	switch	.text
  420  003c               f_EXTI2_IRQHandler:
  424  003c               L122:
- 425                     ; 216   while (1);
+ 425                     ; 215   while (1);
  427  003c 20fe          	jra	L122
- 449                     ; 227 INTERRUPT_HANDLER(EXTI3_IRQHandler,11)
- 449                     ; 228 {
+ 449                     ; 226 INTERRUPT_HANDLER(EXTI3_IRQHandler,11)
+ 449                     ; 227 {
  450                     	switch	.text
  451  003e               f_EXTI3_IRQHandler:
  455  003e               L532:
- 456                     ; 232   while (1);
+ 456                     ; 231   while (1);
  458  003e 20fe          	jra	L532
- 480                     ; 243 INTERRUPT_HANDLER(EXTI4_IRQHandler,12)
- 480                     ; 244 {
+ 480                     ; 242 INTERRUPT_HANDLER(EXTI4_IRQHandler,12)
+ 480                     ; 243 {
  481                     	switch	.text
  482  0040               f_EXTI4_IRQHandler:
  486  0040               L152:
- 487                     ; 248   while (1);
+ 487                     ; 247   while (1);
  489  0040 20fe          	jra	L152
- 511                     ; 259 INTERRUPT_HANDLER(EXTI5_IRQHandler,13)
- 511                     ; 260 {
+ 511                     ; 258 INTERRUPT_HANDLER(EXTI5_IRQHandler,13)
+ 511                     ; 259 {
  512                     	switch	.text
  513  0042               f_EXTI5_IRQHandler:
  517  0042               L562:
- 518                     ; 264   while (1);
+ 518                     ; 263   while (1);
  520  0042 20fe          	jra	L562
- 542                     ; 275 INTERRUPT_HANDLER(EXTI6_IRQHandler,14)
- 542                     ; 276 {// disableInterrupts();
+ 542                     ; 274 INTERRUPT_HANDLER(EXTI6_IRQHandler,14)
+ 542                     ; 275 {// disableInterrupts();
  543                     	switch	.text
  544  0044               f_EXTI6_IRQHandler:
- 548                     ; 283 }
+ 548                     ; 282 }
  551  0044 80            	iret
- 573                     ; 297 INTERRUPT_HANDLER(EXTI7_IRQHandler,15)
- 573                     ; 298 {
+ 573                     ; 296 INTERRUPT_HANDLER(EXTI7_IRQHandler,15)
+ 573                     ; 297 {
  574                     	switch	.text
  575  0045               f_EXTI7_IRQHandler:
- 579                     ; 326 }
+ 579                     ; 325 }
  582  0045 80            	iret
- 604                     ; 334 INTERRUPT_HANDLER(LCD_IRQHandler,16)
- 604                     ; 335 {
+ 604                     ; 333 INTERRUPT_HANDLER(LCD_IRQHandler,16)
+ 604                     ; 334 {
  605                     	switch	.text
  606  0046               f_LCD_IRQHandler:
  610  0046               L123:
- 611                     ; 339   while (1);
+ 611                     ; 338   while (1);
  613  0046 20fe          	jra	L123
- 636                     ; 349 INTERRUPT_HANDLER(SWITCH_CSS_BREAK_DAC_IRQHandler,17)
- 636                     ; 350 {
+ 636                     ; 348 INTERRUPT_HANDLER(SWITCH_CSS_BREAK_DAC_IRQHandler,17)
+ 636                     ; 349 {
  637                     	switch	.text
  638  0048               f_SWITCH_CSS_BREAK_DAC_IRQHandler:
  642  0048               L533:
- 643                     ; 354   while (1);
+ 643                     ; 353   while (1);
  645  0048 20fe          	jra	L533
- 668                     ; 365 INTERRUPT_HANDLER(ADC1_COMP_IRQHandler,18)
- 668                     ; 366 {
+ 668                     ; 364 INTERRUPT_HANDLER(ADC1_COMP_IRQHandler,18)
+ 668                     ; 365 {
  669                     	switch	.text
  670  004a               f_ADC1_COMP_IRQHandler:
  674  004a               L153:
- 675                     ; 370   while (1);
+ 675                     ; 369   while (1);
  677  004a 20fe          	jra	L153
- 700                     ; 381 INTERRUPT_HANDLER(TIM2_UPD_OVF_TRG_BRK_IRQHandler,19)
- 700                     ; 382 {
+ 700                     ; 380 INTERRUPT_HANDLER(TIM2_UPD_OVF_TRG_BRK_IRQHandler,19)
+ 700                     ; 381 {
  701                     	switch	.text
  702  004c               f_TIM2_UPD_OVF_TRG_BRK_IRQHandler:
  706  004c               L563:
- 707                     ; 386   while (1);
+ 707                     ; 385   while (1);
  709  004c 20fe          	jra	L563
- 732                     ; 397 INTERRUPT_HANDLER(TIM2_CAP_IRQHandler,20)
- 732                     ; 398 {
+ 732                     ; 396 INTERRUPT_HANDLER(TIM2_CAP_IRQHandler,20)
+ 732                     ; 397 {
  733                     	switch	.text
  734  004e               f_TIM2_CAP_IRQHandler:
  738  004e               L104:
- 739                     ; 402   while (1);
+ 739                     ; 401   while (1);
  741  004e 20fe          	jra	L104
- 764                     ; 414 INTERRUPT_HANDLER(TIM3_UPD_OVF_TRG_BRK_IRQHandler,21)
- 764                     ; 415 {
+ 764                     ; 413 INTERRUPT_HANDLER(TIM3_UPD_OVF_TRG_BRK_IRQHandler,21)
+ 764                     ; 414 {
  765                     	switch	.text
  766  0050               f_TIM3_UPD_OVF_TRG_BRK_IRQHandler:
  770  0050               L514:
- 771                     ; 419   while (1);
+ 771                     ; 418   while (1);
  773  0050 20fe          	jra	L514
- 796                     ; 429 INTERRUPT_HANDLER(TIM3_CAP_IRQHandler,22)
- 796                     ; 430 {
+ 796                     ; 428 INTERRUPT_HANDLER(TIM3_CAP_IRQHandler,22)
+ 796                     ; 429 {
  797                     	switch	.text
  798  0052               f_TIM3_CAP_IRQHandler:
  802  0052               L134:
- 803                     ; 434   while (1);
+ 803                     ; 433   while (1);
  805  0052 20fe          	jra	L134
- 828                     ; 444 INTERRUPT_HANDLER(TIM1_UPD_OVF_TRG_COM_IRQHandler,23)
- 828                     ; 445 {
+ 828                     ; 443 INTERRUPT_HANDLER(TIM1_UPD_OVF_TRG_COM_IRQHandler,23)
+ 828                     ; 444 {
  829                     	switch	.text
  830  0054               f_TIM1_UPD_OVF_TRG_COM_IRQHandler:
  834  0054               L544:
- 835                     ; 449   while (1);
+ 835                     ; 448   while (1);
  837  0054 20fe          	jra	L544
- 860                     ; 459 INTERRUPT_HANDLER(TIM1_CAP_IRQHandler,24)
- 860                     ; 460 {
+ 860                     ; 458 INTERRUPT_HANDLER(TIM1_CAP_IRQHandler,24)
+ 860                     ; 459 {
  861                     	switch	.text
  862  0056               f_TIM1_CAP_IRQHandler:
  866  0056               L164:
- 867                     ; 464   while (1);
+ 867                     ; 463   while (1);
  869  0056 20fe          	jra	L164
- 892                     ; 475 INTERRUPT_HANDLER(TIM4_UPD_OVF_TRG_IRQHandler,25)
- 892                     ; 476 {
+ 892                     ; 474 INTERRUPT_HANDLER(TIM4_UPD_OVF_TRG_IRQHandler,25)
+ 892                     ; 475 {
  893                     	switch	.text
  894  0058               f_TIM4_UPD_OVF_TRG_IRQHandler:
  898  0058               L574:
- 899                     ; 481 	while (1);
+ 899                     ; 480 	while (1);
  901  0058 20fe          	jra	L574
- 923                     ; 491 INTERRUPT_HANDLER(SPI1_IRQHandler,26)
- 923                     ; 492 {
+ 923                     ; 490 INTERRUPT_HANDLER(SPI1_IRQHandler,26)
+ 923                     ; 491 {
  924                     	switch	.text
  925  005a               f_SPI1_IRQHandler:
  929  005a               L115:
- 930                     ; 496   while (1);
+ 930                     ; 495   while (1);
  932  005a 20fe          	jra	L115
- 955                     ; 507 INTERRUPT_HANDLER(USART1_TX_IRQHandler,27)
- 955                     ; 508 {
+ 955                     ; 506 INTERRUPT_HANDLER(USART1_TX_IRQHandler,27)
+ 955                     ; 507 {
  956                     	switch	.text
  957  005c               f_USART1_TX_IRQHandler:
  961  005c               L525:
- 962                     ; 512   while (1);
+ 962                     ; 511   while (1);
  964  005c 20fe          	jra	L525
- 987                     ; 523 INTERRUPT_HANDLER(USART1_RX_IRQHandler,28)
- 987                     ; 524 {
+ 987                     ; 522 INTERRUPT_HANDLER(USART1_RX_IRQHandler,28)
+ 987                     ; 523 {
  988                     	switch	.text
  989  005e               f_USART1_RX_IRQHandler:
  993  005e               L145:
- 994                     ; 528   while (1);
+ 994                     ; 527   while (1);
  996  005e 20fe          	jra	L145
-1018                     ; 539 INTERRUPT_HANDLER(I2C1_IRQHandler,29)
-1018                     ; 540 {
+1018                     ; 538 INTERRUPT_HANDLER(I2C1_IRQHandler,29)
+1018                     ; 539 {
 1019                     	switch	.text
 1020  0060               f_I2C1_IRQHandler:
 1024  0060               L555:
-1025                     ; 544   while (1);
+1025                     ; 543   while (1);
 1027  0060 20fe          	jra	L555
 1039                     	xref	_readControlData
 1040                     	xdef	f_I2C1_IRQHandler
