@@ -2999,10 +2999,10 @@ assert_param	..\..\inc\stm8l15x_conf.h	74;"	macro
 assert_param	..\..\inc\stm8l15x_conf.h	78;"	macro
 bool	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	206;"	typedef	typeref:enum:__anon1
 convert_into_char	..\..\inc\discover_functions.h	99;"	prototype	signature:(uint16_t number, uint16_t *p_tab)
-deInitClock	..\..\src\main.c	14;"	prototype	file:	signature:(void)
-deInitClock	..\..\src\main.c	25;"	function	signature:(void)
-deInitGPIO	..\..\src\main.c	15;"	prototype	file:	signature:(void)
-deInitGPIO	..\..\src\main.c	52;"	function	signature:(void)
+deInitClock	..\..\src\main.c	16;"	prototype	file:	signature:(void)
+deInitClock	..\..\src\main.c	71;"	function	signature:(void)
+deInitGPIO	..\..\src\main.c	17;"	prototype	file:	signature:(void)
+deInitGPIO	..\..\src\main.c	98;"	function	signature:(void)
 delayLFO_ms	..\..\inc\delay.h	28;"	prototype	signature:(u16 n_ms)
 delayLFO_ms	..\..\src\delay.c	98;"	function	signature:(u16 n_ms)
 delay_10us	..\..\inc\delay.h	35;"	prototype	signature:(u16 n_10us)
@@ -3020,10 +3020,12 @@ enableInterrupts	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	276
 halt	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2748;"	macro
 halt	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2758;"	macro
 halt	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2769;"	macro
-initAnalogControls	..\..\src\main.c	16;"	prototype	file:	signature:(void)
-initAnalogControls	..\..\src\main.c	64;"	function	signature:(void)
-initDigitalControls	..\..\src\main.c	17;"	prototype	file:	signature:(void)
-initDigitalControls	..\..\src\main.c	69;"	function	signature:(void)
+initAnalogControls	..\..\src\main.c	110;"	function	signature:(void)
+initAnalogControls	..\..\src\main.c	18;"	prototype	file:	signature:(void)
+initDigitalControls	..\..\src\main.c	117;"	function	signature:(void)
+initDigitalControls	..\..\src\main.c	19;"	prototype	file:	signature:(void)
+initMemory	..\..\src\main.c	15;"	prototype	file:	signature:(void)
+initMemory	..\..\src\main.c	63;"	function	signature:(void)
 int16_t	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	187;"	typedef
 int32_t	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	188;"	typedef
 int8_t	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	186;"	typedef
@@ -3033,12 +3035,12 @@ interrupt_instruction	..\..\src\stm8_interrupt_vector.c	11;"	member	struct:inter
 interrupt_vector	..\..\src\stm8_interrupt_vector.c	10;"	struct	file:
 itoa	..\..\inc\misc.h	27;"	prototype	signature:(uint32_t val, uint8_t base,uint8_t *buf )
 itoa	..\..\src\misc.c	37;"	function	signature:(uint32_t val, uint8_t base,uint8_t *buf)
-main	..\..\src\main.c	113;"	function	signature:(void)
+main	..\..\src\main.c	167;"	function	signature:(void)
 nop	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2744;"	macro
 nop	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2754;"	macro
 nop	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2765;"	macro
-readControlData	..\..\src\main.c	19;"	prototype	file:	signature:(void)
-readControlData	..\..\src\main.c	76;"	function	signature:(void)
+readControlData	..\..\src\main.c	124;"	function	signature:(void)
+readControlData	..\..\src\main.c	21;"	prototype	file:	signature:(void)
 readControlData	..\..\src\stm8l15x_it.c	35;"	prototype	file:	signature:(void)
 rim	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2742;"	macro
 rim	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2752;"	macro
@@ -3046,6 +3048,8 @@ rim	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2763;"	macro
 s16	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	198;"	typedef
 s32	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	197;"	typedef
 s8	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	199;"	typedef
+sampleADC	..\..\src\main.c	14;"	prototype	file:	signature:(void)
+sampleADC	..\..\src\main.c	27;"	function	signature:(void)
 sim	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2743;"	macro
 sim	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2753;"	macro
 sim	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2764;"	macro
@@ -3059,17 +3063,17 @@ u8	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	203;"	typedef
 uint16_t	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	192;"	typedef
 uint32_t	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	193;"	typedef
 uint8_t	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	191;"	typedef
-values	..\..\src\main.c	23;"	variable
+values	..\..\src\main.c	25;"	variable
 wfe	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2747;"	macro
 wfe	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2757;"	macro
 wfe	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2768;"	macro
 wfi	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2746;"	macro
 wfi	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2756;"	macro
 wfi	..\..\..\libraries\stm8l15x_stdperiph_driver\inc\stm8l15x.h	2767;"	macro
-writeControlData	..\..\src\main.c	20;"	prototype	file:	signature:(void)
-writeControlData	..\..\src\main.c	95;"	function	signature:(void)
-writeEEPROMByte	..\..\src\main.c	104;"	function	signature:(const char address, char data)
-writeEEPROMByte	..\..\src\main.c	21;"	prototype	file:	signature:(const char address, char data)
+writeControlData	..\..\src\main.c	149;"	function	signature:(void)
+writeControlData	..\..\src\main.c	22;"	prototype	file:	signature:(void)
+writeEEPROMByte	..\..\src\main.c	158;"	function	signature:(const char address, char data)
+writeEEPROMByte	..\..\src\main.c	23;"	prototype	file:	signature:(const char address, char data)
 x17ff	..\..\src\main.c	11;"	variable
 x5051	..\..\src\main.c	10;"	variable
 x5054	..\..\src\main.c	12;"	variable

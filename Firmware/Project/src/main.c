@@ -11,6 +11,7 @@ volatile char FLASH_CR2     @0x5051;
 volatile char FLASH_NCR2    @0x17ff;    
 volatile char FLASH_IAPSR   @0x5054;    
 
+char sampleADC(void);
 void initMemory(void);
 void deInitClock(void);
 void deInitGPIO(void);
@@ -22,6 +23,40 @@ void writeControlData(void);
 void writeEEPROMByte(const char address, char data);
 
 char values[NUM_VALUES];
+
+char sampleADC(void)
+{
+	char res = 0x0;
+
+  CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, ENABLE);
+  ADC_DeInit(ADC1);
+  
+  ADC_VrefintCmd(ENABLE);
+  delay_10us(3);
+  
+  ADC_Cmd(ADC1, ENABLE);	 
+  ADC_Init(ADC1, ADC_ConversionMode_Single,
+  ADC_Resolution_6Bit, ADC_Prescaler_1);
+  
+  ADC_SamplingTimeConfig(ADC1, ADC_Group_SlowChannels, ADC_SamplingTime_9Cycles);
+  ADC_ChannelCmd(ADC1, ADC_Channel_0, ENABLE);
+  delay_10us(3);
+
+	ADC_SoftwareStartConv(ADC1);
+	while( ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);
+	res = (char)ADC_GetConversionValue(ADC1);
+	
+  ADC_VrefintCmd(DISABLE);
+  ADC_DeInit(ADC1);
+ 
+	/* disable SchmittTrigger for ADC_Channel_24, to save power */
+  //ADC_SchmittTriggerConfig(ADC1, ADC_Channel_24, DISABLE);
+	
+  CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, DISABLE);
+  ADC_ChannelCmd(ADC1, ADC_Channel_0, DISABLE);
+	
+  return res;
+}
 
 void initMemory(void)
 {
@@ -73,6 +108,8 @@ void deInitGPIO (void)
 char initAnalogControls(void)
 {
 	values[1] = 0x0;
+	
+	GPIO_Init(GPIOA, GPIO_Pin_6, GPIO_Mode_In_FL_No_IT);
 } 
 
 char initDigitalControls(void)
@@ -84,18 +121,19 @@ char initDigitalControls(void)
 
 void readControlData(void)
 {
+	char a0 = 0x0;
 	char v0 = 0x0;
-	//char v1 = 0x0;
+	
+	a0 = sampleADC();
 	
 	v0 |= GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_3) != 0x0 ? 0x0 : 0x1;
 	v0 |= (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_2) != 0x0 ? 0x0 : 0x1) << 0x1;
-	// stuff the 6 bit analog value into the remaing bits of the byte
+	v0 |= (a0 << 0x2); 
 	
-	if(v0 != values[0])// || a != values[1])
+	if(v0 != values[0])
 	{
 		values[0] = v0;
-		//values[1] = a;
-		
+				
 		writeControlData();
 	}
 }                                  
